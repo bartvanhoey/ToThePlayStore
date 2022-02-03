@@ -1,5 +1,5 @@
 trigger:
-- Main
+- main
 
 jobs:
 - job: Android
