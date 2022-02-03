@@ -21,7 +21,7 @@ jobs:
     inputs:
       restoreSolution: '**/*.sln'
       feedsToUse: config
-      nugetConfigPath: ToThePlayStoreApp/ToThePlayStoreApp/NuGet.Config
+      nugetConfigPath: ToThePlayStoreApp/ToThePlayStoreApp/NuGet.config
     enabled: true
 
   - task: XamarinAndroid@1
