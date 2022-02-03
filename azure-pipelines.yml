@@ -1,0 +1,47 @@
+trigger:
+- Main
+
+jobs:
+- job: Android
+  
+  pool:
+    vmImage: 'windows-2019'
+
+  variables:
+    buildConfiguration: 'Release'
+    outputDirectory: '$(build.binariesDirectory)/$(buildConfiguration)'
+
+  steps:
+  - task: NuGetToolInstaller@1
+    displayName: 'Install NugetTool'
+    enabled: true
+  
+  - task: NuGetCommand@2
+    displayName: 'Restore nuget packages'
+    inputs:
+      restoreSolution: '**/*.sln'
+      feedsToUse: config
+      nugetConfigPath: ToThePlayStoreApp/ToThePlayStoreApp/NuGet.Config
+    enabled: true
+
+  - task: XamarinAndroid@1
+    displayName: 'Build Android project'
+    inputs:
+      projectFile: '**/*droid*.csproj'
+      outputDirectory: '$(outputDirectory)'
+      configuration: '$(buildConfiguration)'
+      msbuildVersionOption: '16.0'
+    enabled: true
+
+  - task: AndroidSigning@3
+    displayName: 'Generate apk artifact'
+    inputs:
+       apksign: false
+       zipalign: false
+       apkFiles: '$(outputDirectory)/*.apk'
+
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish apk artifact'
+    inputs:
+      pathtoPublish: '$(outputDirectory)'
