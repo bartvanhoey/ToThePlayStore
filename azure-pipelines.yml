@@ -22,7 +22,6 @@ jobs:
       restoreSolution: '**/*.sln'
       feedsToUse: config
       nugetConfigPath: ToThePlayStoreApp/ToThePlayStoreApp/NuGet.Config
-      externalFeedCredentials: TelerikNugetServiceConnection
     enabled: true
 
   - task: XamarinAndroid@1
